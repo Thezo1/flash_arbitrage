@@ -37,8 +37,9 @@ asset2_id = 31566704
 swap_input_asset = Asset(amm_client, asset2_id)
 swap_output_asset = Asset(amm_client, asset1_id)
 
-# set amounts
+# set amounts, in micro_algo, 1 algo = 1_000_000
 swap_asset_amount = 1_000_000_000
+# this is for conversion, change this to whatever amount you wnat to swap for, here it is 1_000 of tokens
 swap_asset_amount_to_convert = 1_000
 flash_loan_asset = swap_output_asset
 flash_loan_amount = 1_000_000_000
