@@ -62,11 +62,12 @@ pool_pactfi = pact.fetch_pools_by_assets(asset1_pactfi, asset2_pactfi)[0]
 
 # truncate price so it's easier to compare although not accurate, but it works...
 def flash_swap():
+    pactfi = int(pool_pactfi.state.secondary_asset_price * 100)
+    algofi = int(pool.get_pool_price(asset1_id) * 100)
+
     # if price on pactfi is greater than price on algofi
     # buy low sell high so buy algofi sell pactfi...
-    if int(pool_pactfi.state.secondary_asset_price * 100) > int(
-        pool.get_pool_price(asset1_id) * 100
-    ):
+    if pactfi > algofi:
         # prepare swap and some "minor" converions
         int_price1 = int(pool.get_pool_price(asset1_id) * 100)
         micro1 = int_price1 * 10_000
@@ -91,10 +92,7 @@ def flash_swap():
 
     # if pactfi is less than algofi
     # buy low sell high, so buy on pacfi sell on algofi...
-    elif int(pool_pactfi.state.secondary_asset_price * 100) < int(
-        pool.get_pool_price(asset1_id) * 100
-    ):
-
+    elif pactfi < algofi:
         swap1 = pool_pactfi.prepare_swap(
             asset=asset2_pactfi,
             amount=swap_asset_amount,
